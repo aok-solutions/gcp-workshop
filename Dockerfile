@@ -16,6 +16,6 @@ RUN cd ${APP_HOME} && npm install
 
 RUN cd ${APP_HOME}/client && yarn install
 
-EXPOSE 5000 3000
+EXPOSE 3000
 
 CMD /usr/local/bin/init.sh
