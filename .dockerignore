@@ -2,3 +2,4 @@ node_modules
 client/node_modules
 terraform
 Makefile
+k8s
