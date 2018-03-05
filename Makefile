@@ -9,3 +9,12 @@ run:
 
 stop:
 	docker rm -f gcp-workshop-app || true
+<<<<<<< HEAD
+=======
+
+k8s-create:
+	kubectl create -f k8s/gcp-workshop.yml
+
+k8s-update:
+	kubectl set image deployments/hello-app hello-app=gcr.io/google-samples/hello-app:2.0
+>>>>>>> update README

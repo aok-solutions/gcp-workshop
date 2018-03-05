@@ -45,6 +45,11 @@ make run
     * Use `kubectl` to create deploy both deployment and service
     * [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) or [Replication Controller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/)
     * [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+      * Should be able to connect to GKE cluster via gcloud and `kubectl` in cli
+1.  Use Makefile to build docker image locally and push to Google Container Registry (GCR) OR you may use prebuild `tomqwu/gcp-workshop:0.0.1` and `tomqwu/gcp-workshop:0.0.2` image
+    * **Definition of Done**
+      * should be able to ready to run two versions of gcp-workshop docker images locally and on kubernetes
+1.  Apply provided definition yaml to GKE cluster
     * **Definition of Done**
       * gcp-workshop replication set (3 pods) should be deployed on GKE with healthy status
       * exposed with external IP via service
