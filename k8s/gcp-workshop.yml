@@ -1,32 +1,32 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: hello-app
+  name: gcp-workshop
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello-app 
+      app: gcp-workshop 
   template:
     metadata:
       labels:
-        app: hello-app
+        app: gcp-workshop
     spec:
       containers:
-      - name: hello-app
-        image: gcr.io/google-samples/hello-app:1.0
+      - name: gcp-workshop
+        image: tomqwu/gcp-workshop:0.0.1
         ports:
-        - containerPort: 8080
+        - containerPort: 3000
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: hello-app 
+  name: gcp-workshop 
 spec:
   selector:
-    app: hello-app
+    app: gcp-workshop
   ports:
   - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    port: 80
+    targetPort: 3000
   type: LoadBalancer
