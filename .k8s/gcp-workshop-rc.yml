@@ -18,4 +18,4 @@ spec:
               - containerPort: 3000
             env:
               - name: GITSHA
-                value: git9232427
+                value: 9232427
