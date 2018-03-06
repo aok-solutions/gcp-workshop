@@ -61,6 +61,7 @@ make run
 
     * [Install Terraform](https://www.terraform.io/intro/getting-started/install.html)
     * Create Backend
+      * Create Google Storage Bucket
       * [Google Storage Bucket](https://www.terraform.io/docs/backends/types/gcs.html)
     * Create Provider(s)
       * [Google Cloud](https://www.terraform.io/docs/providers/google/index.html)
@@ -72,10 +73,11 @@ make run
     * **Definition of Done**
 
       * The k8s cluster should be provisioned via Terraform
+      * Terraform state should be stored in Google Storage Bucket
       * `gcp-workshop` app should be provisioned via
         * `kubectl create`
         * _or_ Terraform `kubernetes provisioner`
-      * **Bonus** - `gcp-workshop` is available after `terraform apply` without any manual/GUI steps
+      * **Bonus** - `gcp-workshop` is accessible via endpoint after `terraform apply` without any manual/GUI steps
       * **Bonus** - Refactor terraform to use modules and organize the project to match the environment/organization and the infrastructure structure
 
             ├── README.md
