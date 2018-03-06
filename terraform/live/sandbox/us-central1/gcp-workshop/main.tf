@@ -16,3 +16,7 @@ module "sandbox" {
   image            = "${var.image}"
   gitsha           = "${var.gitsha}"
 }
+
+output "lb_ip" {
+  value = "${module.sandbox.lb_ip}"
+}
