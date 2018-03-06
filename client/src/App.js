@@ -30,7 +30,7 @@ class App extends Component {
             className="App-logo"
             alt="logo"
           />
-          <h1 className="App-title">Welcome to GCP Workshop</h1>
+          <h1 className="App-title">Welcome to GCP Workshop V2</h1>
         </header>
         <p className="App-intro">hostname: {this.state.response.hostname}</p>
         <p className="App-intro">gitsha: {this.state.response.gitsha}</p>
