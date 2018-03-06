@@ -51,7 +51,9 @@ make run
       * the app is accessible via browser with correct information displayed
 1.  Perform a rolling update on GKE cluster with different docker image tag
 
-    * [Rolling Update](https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/)
+    * Rolling Update
+      * [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-update-deployment) **Recommended**
+      * [Replication Controller](https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/)
     * Check the content changes and downtime
     * **Definition of Done**
       * use `kubectl` to perform rolling update on `gcp-workshop` app
