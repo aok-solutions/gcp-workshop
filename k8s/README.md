@@ -3,7 +3,8 @@
 ### Rolling update for replicate controller
 
 ```shell
-kubectl rolling-update gcp-workshop-sandbox -f gcp-workshop-rc.yml
+kubectl get pods -l App=gcp-workshop-sandbox -L deployment
+kubectl rolling-update gcp-workshop-sandbox -f gcp-workshop-rc-v2.yml
 ```
 
 ### Rolling update for deployment

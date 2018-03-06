@@ -5,12 +5,12 @@ metadata:
 spec:
   replicas: 3
   selector:
-    app: gcp-workshop-sandbox
+    App: gcp-workshop-sandbox
     deployment: v2
   template:
     metadata:
       labels:
-        app: gcp-workshop-sandbox
+        App: gcp-workshop-sandbox
         deployment: v2
     spec:
       containers:
