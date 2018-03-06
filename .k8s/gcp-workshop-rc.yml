@@ -1,17 +1,15 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  labels:
-    App: gcp-workshop-sandbox-v2
-  name: gcp-workshop-sandbox-v2
+  name: gcp-workshop-sandbox-v3
 spec:
   replicas: 3
   selector:
-    App: gcp-workshop-sandbox-v2
+    App: gcp-workshop-sandbox
   template:
     metadata:
       labels:
-        App: gcp-workshop-sandbox-v2
+        App: gcp-workshop-sandbox
     spec:
       containers:
           - name: gcp-workshop-sandbox
