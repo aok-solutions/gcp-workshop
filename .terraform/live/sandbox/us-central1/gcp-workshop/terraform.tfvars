@@ -18,6 +18,6 @@ labels_owner = "tomwu"
 
 labels_env = "sandbox"
 
-image = "tomqwu/gcp-workshop:0.0.2"
+image = "tomqwu/gcp-workshop:0.0.1"
 
-gitsha = "git9232427"
+gitsha = "83262352"

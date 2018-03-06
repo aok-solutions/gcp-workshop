@@ -10,13 +10,16 @@
 
 ## Rules of Engagement
 
-* Let's do pair
-* Try using cli and scriptive approach as much as possible
-* Use Google Cloud Console GUI if you are not familar with input and output of each component
+* Let's do pairing
+* We will provision infrastructure and application via Google Cloud Console and command line first then automate the infrastructure as code using Terraform at end
 
-## How to run the `gcp-workshop` app
+## Things are provided to the teams
 
-### Build and run locally
+* Dockerfile for `gcp-workshop` app
+* `Makefile` for building and running `gcp-workshop` app locally
+* Pre-built Docker images [tomqwu/gcp-workshop](https://hub.docker.com/r/tomqwu/gcp-workshop/) with tags `0.0.1` and `0.0.2`
+
+## How to run `gcp-workshop` app locally
 
 ```shell
 make build
@@ -32,34 +35,48 @@ make run
       * Able to install and init
 1.  [Create Project and GKE cluster](https://cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview)
     * **Definition of Done**
-      * Should be able to connect to GKE cluster via gcloud and `kubectl` in cli
-1.  Use Makefile to build docker image locally and push to Google Container Registry (GCR) OR you may use prebuild `tomqwu/gcp-workshop:0.0.1` and `tomqwu/gcp-workshop:0.0.2` image
+      * GKE cluster is in a healthy state
+      * Configure `kubectl` command line access GKE cluster
+1.  _Optional/Bonus_: Use Makefile to build docker image locally and push to Google Container Registry (GCR)
     * **Definition of Done**
-      * should be able to ready to run two versions of gcp-workshop docker images locally and on kubernetes
-1.  Apply provided definition yaml to GKE cluster
+      * images should be able be pulled and ran locally and on GKE cluster
+1.  Create and apply Kubernetes Deployment (or Replication Controller) and Service definition yaml
+    * Use `kubectl` to create deploy both deployment and service
+    * [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) or [Replication Controller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/)
+    * [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
     * **Definition of Done**
       * gcp-workshop replication set (3 pods) should be deployed on GKE with healthy status
       * exposed with external IP via service
       * the app is accessible via browser with correct information displayed
-1.  Make change to the Node.js app and do rolling update on GKE cluster
-
+1.  Perform a rolling update on GKE cluster with different docker image tag
     * [Rolling Update](https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/)
     * Check the content changes and downtime
-      * `for ((i=1;i<=100;i++)); do curl -v --header "Connection: keep-alive" "http://[external_ip]:3000"; done`
     * **Definition of Done**
-      * use `kubectl` to perform rolling update on `gcp-workshop`
+      * use `kubectl` to perform rolling update on `gcp-workshop` app
       * should be able to observe the content changes without downtime
 
 1.  Implement infrastructure as code via Terraform
-    * Backend
+    * [Install Terraform](https://www.terraform.io/intro/getting-started/install.html)
+    * Create Backend
       * [Google Storage Bucket](https://www.terraform.io/docs/backends/types/gcs.html)
-    * Provider
+    * Create Provider(s)
       * [Google Cloud](https://www.terraform.io/docs/providers/google/index.html)
       * [kubernetes](https://www.terraform.io/docs/providers/kubernetes/index.html)
-    * Resource
+    * Create Resources
       * [GKE](https://www.terraform.io/docs/providers/google/r/container_cluster.html#)
       * [Storage Bucket](https://www.terraform.io/docs/providers/google/r/storage_bucket.html)
+      * [Registry Repo](https://www.terraform.io/docs/providers/google/d/google_container_registry_repository.html)
     * **Definition of Done**
-      * The k8s cluster should be provided via Terraform
-      * Initial k8s `gcp-workshop` app and service should be provisioned via provisioner (`local-exec` with `kubectl`) or `kubernetes` provider
-      * `gcp-workshop` should be available after `terraform apply` without any manual steps
+      * The k8s cluster should be provisioned via Terraform
+      * `gcp-workshop` app should be provisioned via
+        * `kubectl create`
+        * **Bonus** -  Terraform `kubernetes provisioner`
+      * **Bonus** - `gcp-workshop` is available after `terraform apply` without any manual/GUI steps
+
+## _Coming next ..._
+
+### Part B: Deploy A Two-tier Node.js app with managed instance group
+
+### Part C: Refactor Terraform Code and multiply the environment
+
+### Part D: TDD with Infrastructure as code
