@@ -27,17 +27,30 @@ make build
 make run
 ```
 
-## Part A: Deploy A Two-tier `gcp-workshop` app
+## Prerequisites
 
-> Deploy a two-tier node.js app on Google Kubernetes Engine (GKE), approximately 45-90 mins
+> Setup all required tools and dependencies, approximately 10-15 minutes
 
 1.  [Install Gcloud SDK](https://cloud.google.com/sdk/docs/quickstart-macos)
     * **Definition of Done**
       * Able to install and init
-1.  [Create Project and GKE cluster](https://cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview)
+1.  [Create Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
     * **Definition of Done**
-      * GKE cluster is in a healthy state
-      * Configure `kubectl` command line access GKE cluster
+      * Able to deploy resources in project with project owner permission
+
+## Part A: Deploy A Two-tier `gcp-workshop` app on Kubernetes
+
+> Deploy a two-tier node.js app on Google Kubernetes Engine (GKE), approximately 45-90 mins
+
+1.  [Create Kubernetes cluster in Kubernetes Engine](https://cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview)
+
+    * Creat Kubernetes with default settings
+    * Enable `kubectl` component via gcloud [components](https://cloud.google.com/sdk/gcloud/reference/components/install) install
+    * Connect to Kubernetes cluster via gcloud, e.g. `gcloud container clusters get-credentials [cluster_name] --zone [Zone] --project [project_id]`, this will generate local `~/.kube/config` credential
+    * **Definition of Done**
+      * the cluster is up and in healthy running state
+      * able to use `kubectl` interact with the cluster, e.g. `kubectl cluster-info` etc.
+
 1.  _Optional/Bonus_: Use Makefile to build docker image locally and push to Google Container Registry (GCR)
     * **Definition of Done**
       * images should be able be pulled and ran locally and on GKE cluster
@@ -48,9 +61,8 @@ make run
     * **Definition of Done**
       * gcp-workshop replication set (3 pods) should be deployed on GKE with healthy status
       * exposed with external IP via service
-      * the app is accessible via browser with correct information displayed
+      * the app is accessible via browser with hostname and commit# displayed
 1.  Perform a rolling update on GKE cluster with different docker image tag
-
     * Rolling Update
       * [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-update-deployment) **Recommended**
       * [Replication Controller](https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/)
@@ -59,49 +71,75 @@ make run
       * use `kubectl` to perform rolling update on `gcp-workshop` app
       * should be able to observe the content changes without downtime
 
-1.  Implement infrastructure as code via Terraform
+Before continuing on Part B, you should have basic knowledge of
+
+* How to create a Kubernetes cluster via Google Console or cli
+* What required **input** parameters are
+* What available **output** values are, such as endpoint, credential etc.
+* Able to deploy container app and service via `kubectl`
+
+## Part B-1: Get started with Terraform
+
+1.  Setup and initialize Terraform
 
     * [Install Terraform](https://www.terraform.io/intro/getting-started/install.html)
-    * Create Backend
-      * Create Google Storage Bucket
-      * [Google Storage Bucket](https://www.terraform.io/docs/backends/types/gcs.html)
-    * Create Provider(s)
-      * [Google Cloud](https://www.terraform.io/docs/providers/google/index.html)
-      * [kubernetes](https://www.terraform.io/docs/providers/kubernetes/index.html)
-    * Create Resources
-      * [GKE](https://www.terraform.io/docs/providers/google/r/container_cluster.html#)
-      * [Storage Bucket](https://www.terraform.io/docs/providers/google/r/storage_bucket.html)
-      * [Registry Repo](https://www.terraform.io/docs/providers/google/d/google_container_registry_repository.html)
+    * Create a sub-directory called `terraform`
+    * Create Terraform backend in `backend.tf` to save Terraform state using [Google Storage Bucket](https://www.terraform.io/docs/backends/types/gcs.html)
+    * Create Provider(s) in `main.tf`
+      * [Google Cloud](https://www.terraform.io/docs/providers/google/index.html) provider
+    * Run `terraform init`
     * **Definition of Done**
+      * `terraform init` should run without error
+      * Terraform state should be created in Google Storage Bucket
+      * It looks like
+        ```shell
+        terraform
+        ├── backend.tf
+        └── main.tf
+        ```
 
-      * The k8s cluster should be provisioned via Terraform
-      * Terraform state should be stored in Google Storage Bucket
-      * `gcp-workshop` app should be provisioned via
-        * `kubectl create`
-        * _or_ Terraform `kubernetes provisioner`
-      * **Bonus** - `gcp-workshop` is accessible via endpoint after `terraform apply` without any manual/GUI steps
-      * **Bonus** - Refactor terraform to use modules and organize the project to match the environment/organization and the infrastructure structure
+1.  Create GKE cluster
+    * Create [GKE - Container Cluster](https://www.terraform.io/docs/providers/google/r/container_cluster.html#) in `main.tf`
+    * **Definition of Done**
+      * GKE cluster should be up and running in healhy state after `terraform apply`
+   
+1. Application Provisioning
+    * Two Provisioning Options:
+      1. `kubectl create -f [deploy and service yaml]` via [local-exec](https://www.terraform.io/docs/provisioners/local-exec.html) provisioner
+      2. _or_ Terraform [Replication Controller](https://www.terraform.io/docs/providers/kubernetes/r/replication_controller.html) resource via Terraform [Kubernetes Provider](https://www.terraform.io/docs/providers/kubernetes/index.html)
+        > Important: how do you pass Kubernetes cluster credentials to provisioner
+    * **Definition of Done**
+      * `gcp-workshop` is accessible via endpoint after `terraform apply` without any manual/GUI steps
 
-            ├── README.md
-            ├── live
-            │   ├── dev
-            │   │   └── us-central1
-            │   │       ├── nodeapp-k8s
-            │   │       │   ├── README.md
-            │   │       │   ├── main.tf
-            │   │       │   ├── terraform.tfvars
-            │   │       │   └── variables.tf
-            │   │       └── nodeapp-mig
-            │   ├── mgmt
-            │   ├── production
-            │   └── staging
-            └── modules
-                ├── lb
-                │   ├── README.md
-                │   ├── main.tf
-                │   ├── output.tf
-                │   └── variables.tf
-                └── nodeapp
+## Part B-2: Make Terraform DRY
+
+1.  Create Terraform Modules
+    * Refactor terraform to use modules and organize the project to match the environment/organization and the infrastructure structure
+
+          ├── README.md
+          ├── live
+          │   ├── dev
+          │   │   └── us-central1
+          │   │       ├── gcp-workshop
+          │   │       │   ├── README.md
+          │   │       │   ├── main.tf
+          │   │       │   ├── terraform.tfvars
+          │   │       │   └── variables.tf
+          │   │       └── other-app
+          │   ├── mgmt
+          │   ├── production
+          │   └── staging
+          └── modules
+              ├── k8s
+              │   ├── README.md
+              │   ├── main.tf
+              │   ├── output.tf
+              │   └── variables.tf
+              └── gcp-workshop
+    * Create `k8s` module
+    * Create `gcp-workshop` module to use `k8s` module and provision `kubectl` via 
+
+1. _Bonus_ - use [workspace](https://www.terraform.io/docs/state/workspaces.html) to manage environments like dev, staging or production instead of using directory namespaces
 
 ## _Coming next ..._
 
