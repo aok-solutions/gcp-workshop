@@ -143,6 +143,6 @@ Before continuing on Part B, you should have basic knowledge of
 
 ## _Coming next ..._
 
-### Part B: Deploy A Two-tier Node.js app with managed instance group
+### Part C: Deploy a three-tier Node.js app with managed instance group
 
-### Part C: TDD with Infrastructure as code
+### Part D: TDD with Infrastructure as code
