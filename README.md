@@ -71,7 +71,7 @@ make run
       * use `kubectl` to perform rolling update on `gcp-workshop` app
       * should be able to observe the content changes without downtime
 
-Before continuing on Part B, you should have basic knowledge of
+> IMPORTANT: Before continuing on Part B, you should have basic knowledge of
 
 * How to create a Kubernetes cluster via Google Console or cli
 * What required **input** parameters are
@@ -99,21 +99,23 @@ Before continuing on Part B, you should have basic knowledge of
         ```
 
 1.  Create GKE cluster
+
     * Create [GKE - Container Cluster](https://www.terraform.io/docs/providers/google/r/container_cluster.html#) in `main.tf`
     * **Definition of Done**
       * GKE cluster should be up and running in healhy state after `terraform apply`
-   
-1. Application Provisioning
+
+1.  Application Provisioning
     * Two Provisioning Options:
-      1. `kubectl create -f [deploy and service yaml]` via [local-exec](https://www.terraform.io/docs/provisioners/local-exec.html) provisioner
-      2. _or_ Terraform [Replication Controller](https://www.terraform.io/docs/providers/kubernetes/r/replication_controller.html) resource via Terraform [Kubernetes Provider](https://www.terraform.io/docs/providers/kubernetes/index.html)
-        > Important: how do you pass Kubernetes cluster credentials to provisioner
+      1.  `kubectl create -f [deploy and service yaml]` via [local-exec](https://www.terraform.io/docs/provisioners/local-exec.html) provisioner
+      2.  _or_ Terraform [Replication Controller](https://www.terraform.io/docs/providers/kubernetes/r/replication_controller.html) resource via Terraform [Kubernetes Provider](https://www.terraform.io/docs/providers/kubernetes/index.html)
+          > TIP: how do you pass Kubernetes cluster credentials to provisioner to interact with k8s api
     * **Definition of Done**
       * `gcp-workshop` is accessible via endpoint after `terraform apply` without any manual/GUI steps
 
 ## Part B-2: Make Terraform DRY
 
 1.  Create Terraform Modules
+
     * Refactor terraform to use modules and organize the project to match the environment/organization and the infrastructure structure
 
           ├── README.md
@@ -136,10 +138,11 @@ Before continuing on Part B, you should have basic knowledge of
               │   ├── output.tf
               │   └── variables.tf
               └── gcp-workshop
-    * Create `k8s` module
-    * Create `gcp-workshop` module to use `k8s` module and provision `kubectl` via 
 
-1. _Bonus_ - use [workspace](https://www.terraform.io/docs/state/workspaces.html) to manage environments like dev, staging or production instead of using directory namespaces
+    * Create `k8s` module
+    * Create `gcp-workshop` module to use `k8s` module and provision `kubectl` via
+
+1.  _Bonus_ - use [workspace](https://www.terraform.io/docs/state/workspaces.html) to manage environments like dev, staging or production instead of using directory namespaces
 
 ## _Coming next ..._
 
