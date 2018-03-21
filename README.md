@@ -37,6 +37,7 @@ make run
 1.  [Create Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
     * **Definition of Done**
       * Able to deploy resources in project with project owner permission
+1.  Run `gcloud auth login --project [project_id]`
 
 ## Part A: Deploy A Two-tier `gcp-workshop` app on Kubernetes
 
@@ -49,7 +50,7 @@ make run
     * Connect to Kubernetes cluster via gcloud, e.g. `gcloud container clusters get-credentials [cluster_name] --zone [Zone] --project [project_id]`, this will generate local `~/.kube/config` credential
     * **Definition of Done**
       * the cluster is up and in healthy running state
-      * able to use `kubectl` interact with the cluster, e.g. `kubectl cluster-info` etc.
+      * able to use `kubectl` interact with the cluster and get correct info, e.g. `kubectl cluster-info` etc.
 
 1.  _Optional/Bonus_: Use Makefile to build docker image locally and push to Google Container Registry (GCR)
     * **Definition of Done**
@@ -79,6 +80,8 @@ make run
 * Able to deploy container app and service via `kubectl`
 
 ## Part B-1: Get started with Terraform
+
+> Implement Infrastructure as code by using Terraform, approximately 45-60 mins
 
 1.  Setup and initialize Terraform
 
@@ -115,6 +118,8 @@ make run
       * `gcp-workshop` is accessible via endpoint after `terraform apply` without any manual/GUI steps
 
 ## Part B-2: Make Terraform DRY
+
+> Approximately 45-60 mins
 
 1.  Create Terraform Modules
 
