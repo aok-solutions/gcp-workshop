@@ -85,6 +85,7 @@ make run
     * [Install Terraform](https://www.terraform.io/intro/getting-started/install.html)
     * Create a sub-directory called `terraform`
     * Create Terraform backend in `backend.tf` to save Terraform state using [Google Storage Bucket](https://www.terraform.io/docs/backends/types/gcs.html)
+      > TIP: You will need to create bucket first
     * Create Provider(s) in `main.tf`
       * [Google Cloud](https://www.terraform.io/docs/providers/google/index.html) provider
     * Run `terraform init`
@@ -106,8 +107,9 @@ make run
 
 1.  Application Provisioning
     * Two Provisioning Options:
-      1.  `kubectl create -f [deploy and service yaml]` via [local-exec](https://www.terraform.io/docs/provisioners/local-exec.html) provisioner
-      2.  _or_ Terraform [Replication Controller](https://www.terraform.io/docs/providers/kubernetes/r/replication_controller.html) resource via Terraform [Kubernetes Provider](https://www.terraform.io/docs/providers/kubernetes/index.html)
+      1.  Run Kubernetes deployment via [local-exec](https://www.terraform.io/docs/provisioners/local-exec.html) provisioner
+          > TIP: Use `gcloud` authenticate and `kubectl` apply locally
+      2.  _optionally_ Terraform [Replication Controller](https://www.terraform.io/docs/providers/kubernetes/r/replication_controller.html) resource via Terraform [Kubernetes Provider](https://www.terraform.io/docs/providers/kubernetes/index.html)
           > TIP: how do you pass Kubernetes cluster credentials to provisioner to interact with k8s api
     * **Definition of Done**
       * `gcp-workshop` is accessible via endpoint after `terraform apply` without any manual/GUI steps
