@@ -1,11 +1,10 @@
-# k8s cheatsheet
+# K8S Deployment
 
-### Rolling update for replicate controller
-
+### Creating Deployment
 ```shell
-kubectl get pods -l App=gcp-workshop-sandbox -L deployment
-kubectl rolling-update gcp-workshop-sandbox -f gcp-workshop-rc-v2.yml
+kubectl create -f https://raw.githubusercontent.com/tomqwu/gcp-workshop/a-k8s/k8s/gcp-workshop.yml
 ```
+
 
 ### Rolling update for deployment
 
