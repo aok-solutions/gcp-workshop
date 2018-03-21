@@ -4,7 +4,7 @@ provider "google" {
 }
 
 module "sandbox" {
-  source           = "../../../../modules/gcp-workshop"
+  source           = "../../../../modules/gcp-workshop-rc"
   name             = "${var.name}"
   zone             = "${var.zone}"
   node_count       = "${var.node_count}"
