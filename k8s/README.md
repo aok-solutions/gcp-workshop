@@ -1,5 +1,9 @@
 # k8s cheatsheet
 
+### Creating Deployment
+```shell
+kubectl create -f gcp-workshop.yml
+
 ### Rolling update for replicate controller
 
 ```shell
