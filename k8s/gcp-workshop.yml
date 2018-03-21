@@ -19,7 +19,7 @@ spec:
         - containerPort: 3000
         env:
           - name: GITSHA
-            value: 83262352
+            value: "83262352"
 ---
 kind: Service
 apiVersion: v1
