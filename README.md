@@ -101,6 +101,14 @@ make run
         ├── backend.tf
         └── main.tf
         ```
+> TIP: A common workflow looks like below
+
+```shell
+terraform validate   # Validates the Terraform files
+terraform fmt        # Rewrites config files to canonical format
+terraform plan       # Generate and show an execution plan
+terraform apply      # Builds or changes infrastructure
+```
 
 1.  Create GKE cluster
 
